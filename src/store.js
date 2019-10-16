@@ -12,7 +12,7 @@ export default new Vuex.Store({
     //返回的令牌
     token:'',
     //底部导航栏的状态
-    navigation:false,
+    navigation:true,
   },
   mutations: {
 

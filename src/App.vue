@@ -12,15 +12,17 @@
     </keep-alive>
 
     <van-tabbar
+      route
       v-model="active"
       active-color="#FF6B00"
       inactive-color="#000"
       id = "dh"
+      v-if="bl"
     >
-      <van-tabbar-item icon="wap-home-o" to="/">首页</van-tabbar-item>
-      <van-tabbar-item icon="orders-o" to="/forgetPsw">分类</van-tabbar-item>
-      <van-tabbar-item icon="cart-o" to="/cart">购物车</van-tabbar-item>
-      <van-tabbar-item icon="contact" to="/myCentr">{{ddh}}我的</van-tabbar-item>
+      <van-tabbar-item replace icon="wap-home-o" to="/">首页</van-tabbar-item>
+      <van-tabbar-item replace icon="orders-o" to="/classify">分类</van-tabbar-item>
+      <van-tabbar-item replace icon="cart-o" to="/cart">购物车</van-tabbar-item>
+      <van-tabbar-item replace icon="contact" to="/myCentr">我的</van-tabbar-item>
     </van-tabbar>
     <!--&lt;!&ndash;打开路由&ndash;&gt;-->
     <!--<router-view/>-->
@@ -38,10 +40,18 @@
         ddh:'',
         active:'',
         tabType:'',
-
+        num:true,
       }
     },
     methods:{
+    },
+    //定义计算属性
+    computed:{
+      //定义方法
+      bl(){
+        //返回底部的状态
+        return store.state.navigation
+      }
     },
     //在页面加载的时候就执行
     activated:function () {

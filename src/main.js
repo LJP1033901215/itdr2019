@@ -18,6 +18,9 @@ import { Search } from 'vant';
 import { Sticky } from 'vant';
 //List列表
 import { List } from 'vant';
+//引入侧边导航
+import { Sidebar, SidebarItem } from 'vant';
+
 
 
 import 'vant/lib/index.css';
@@ -43,6 +46,10 @@ Vue.use(Search);
 Vue.use(Sticky);
 //List列表
 Vue.use(List);
+//引入侧边导航
+Vue.use(Sidebar);
+Vue.use(SidebarItem);
+
 
 // Vue.use(Lazyload, {
 //   preLoad: 1.3,

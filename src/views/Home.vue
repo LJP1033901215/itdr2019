@@ -7,14 +7,16 @@
             id="ssk"
             v-model="value"
             placeholder="请输入搜索关键词"
-            show-action
+            show-action="true"
             left-icon="search"
             shape="round"
             @search="onSearch"
             background="#ED5B00"
 
           >
-            <div slot="action" @click="onSearch"  icon="search">zhuangtai</div>
+            <div v-if="unm"  slot="action" @click="onLogin"  icon="search">未登录</div>
+            <div v-else   slot="action"   icon="search">{{Users}}</div>
+            <!--<div v-else icon="search">{{users}}</div>-->
           </van-search>
       </van-sticky>
       <div style="">
@@ -92,6 +94,9 @@
       return {
         users: store.state.users,
         value: '',
+        unm:'',
+        //用户的信息
+        Users:'未登录',
         //推荐商品的图片
         imge:[
           require('../assets/logo.png'),
@@ -116,6 +121,19 @@
       }
     },
     methods: {
+      //点击进入登录页面
+      onLogin(){
+        this.$router.push({
+          path:'/login',
+        })
+      },
+      //判断登录状态
+      getUserState(){
+        if (store.state.users !== null){
+          this.unm=false
+          this.Users = store.state.users.username
+        }
+      },
       getPrducts(){
         //获取当前对象
         var this_=this;
@@ -147,11 +165,11 @@
       created: function () {
         this.$emit('public_header', false);
       },
-      components: {},
     },
     //在页面加载的时候就执行
     activated:function () {
       this.getPrducts();
+      this.getUserState();
     }
   };
 </script>

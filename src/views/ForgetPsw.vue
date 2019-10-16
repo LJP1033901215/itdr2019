@@ -183,6 +183,8 @@
         this.$router.push({
           path:'/login'
         })
+
+
       },
       onClickLeft2() {
         this.num2 = false;

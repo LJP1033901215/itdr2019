@@ -1,7 +1,9 @@
 <template>
 <!--个人中心页面===========================================================================================================-->
   <div>
-    <img class="user-poster" src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png">
+    <div id="ding">
+      <input type="text" placeholder="">
+    </div>
     <van-row class="user-links">
       <van-col span="6">
         <van-icon name="pending-payment" />
@@ -58,6 +60,10 @@
         display: block;
         font-size: 24px;
       }
+    }
+    #ding{
+      width: 100%;
+      height: 30%;
     }
   }
 </style>

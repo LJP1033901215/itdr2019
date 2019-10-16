@@ -16,6 +16,8 @@ import ProductDetail from './views/ProductDetail'
 import Cart from './views/Cart'
 //引入个人中心组件
 import MyCentr from './views/MyCentr'
+//引入分类的组件
+import Classify from './views/Classify'
 
 
 Vue.use(Router);
@@ -40,6 +42,14 @@ export default new Router({
       name: 'cart',
       //引入组件，组件咋上面
       component: Cart,
+    },
+    {
+      //根路径
+      path: '/classify',
+      //名字对应得
+      name: 'classify',
+      //引入组件，组件咋上面
+      component: Classify,
     },
     {
       //根路径

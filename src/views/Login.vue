@@ -153,6 +153,8 @@ export default {
             console.log(datas.data);
             //赋值给状态管理,全局保存
             store.state.users = datas.data.data;
+            //改变地址栏的状态
+            store.state.navigation = true
             console.log( store.state.users);
             //把成功的数据进行赋值
             this_.datauser = datas.data.data;
@@ -170,6 +172,7 @@ export default {
     },
     //导航栏点击方法
       onClickLeft() {
+        store.state.navigation = true
         this.$router.push({
           path:'/'
         })
@@ -187,6 +190,9 @@ export default {
       })
     }
     },
+  activated:function () {
+    store.state.navigation = false
+  }
 
 };
 </script>
