@@ -12,8 +12,8 @@
     <!--/>-->
 
     <!--购物车主页-->
-    <van-checkbox-group class="card-goods" v-model="checkedGoods">
-      <van-checkbox
+      <van-checkbox-group class="card-goods" v-model="checkedGoods">
+        <van-checkbox
         class="card-goods__item"
         v-for="item in goods"
         :key="item.id"

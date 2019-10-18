@@ -5,17 +5,14 @@
           <!--搜索框-->
           <van-search
             id="ssk"
-            v-model="value"
             placeholder="请输入搜索关键词"
-            show-action="true"
             left-icon="search"
             shape="round"
             @search="onSearch"
             background="#ED5B00"
-
           >
-            <div v-if="unm"  slot="action" @click="onLogin"  icon="search">未登录</div>
-            <div v-else   slot="action"   icon="search">{{Users}}</div>
+            <!--<div v-if="unm"  slot="action" @click="onLogin"  icon="search">未登录</div>-->
+            <div    slot="action"   icon="search">{{Users}}</div>
             <!--<div v-else icon="search">{{users}}</div>-->
           </van-search>
       </van-sticky>
@@ -28,12 +25,16 @@
         </van-swipe>
 
         <!--九宫格    正方形格子-->
-        <van-grid :gutter="10">
+
+        <!--:key="name2"-->
+
+        <van-grid :gutter="5"  >
           <van-grid-item
-            v-for="value in icons"
-            :key="value"
-            :icon="value.image"
-            :text="value.text"
+            v-for="name1 in icons"
+            :key="name1"
+            :text="name1.text"
+            :icon="name1.img"
+            id ="DH"
           />
         </van-grid>
       </div>
@@ -77,9 +78,6 @@
            真的木有了！
        </div>
       <br>
-
-
-
     </div>
 </template>
 
@@ -93,8 +91,8 @@
     data() {
       return {
         users: store.state.users,
-        value: '',
         unm:'',
+        value:true,
         //用户的信息
         Users:'未登录',
         //推荐商品的图片
@@ -108,14 +106,16 @@
         ],
         //功能栏图片
         icons:[
-          { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
-          { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
-          { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
-          { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
-          { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
-          { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
-          { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
-          { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
+          {text:'超市',img: require('../assets/超市.webp')},
+          {text:'电脑',img: require('../assets/电脑.webp')},
+          {text:'生鲜',img:  require('../assets/鲜.webp')},
+          {text:'衣服',img:  require('../assets/衣服.webp')},
+          {text:'优惠卷',img: require('../assets/卷.webp')},
+          {text:'赚钱',img: require('../assets/钱.webp')},
+          {text:'抢购',img:  require('../assets/抢购.webp')},
+          {text:'充值',img:  require('../assets/充值.webp')},
+
+          // { text:'生鲜',image:'https://img.yzcdn.cn/vant/cat.jpeg' },
         ],
         productList:'',
       }
@@ -139,7 +139,6 @@
         var this_=this;
         var params = new URLSearchParams();
         params.append('productId',10000)
-
         axios.post('/portal/product/detail.do',params)
           .then(function (datas) {
             //获取状态码
@@ -175,10 +174,14 @@
 </script>
 
 <style scoped>
+  #DH{
+    position: static;
+  }
   #app1{
     margin-bottom: 10%;
     /*background-color: black;*/
   }
+
 #ssk{
  z-index: 2;
 }

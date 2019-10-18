@@ -19,7 +19,9 @@
       };
     },
     methods:{
-      onList
+      onList(){
+
+      },
     }
   };
 </script>
