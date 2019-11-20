@@ -1,12 +1,14 @@
 <template>
   <div class="goods">
+    <!--返回导航栏-->
     <top-back :content="titie"></top-back>
     <!--商品轮播图-->
-    <van-swipe class="goods-swipe" :autoplay="3000">
-      <van-swipe-item v-for="thumb in goods.subImages" :key="thumb">
-        <img :src="thumb" >
-      </van-swipe-item>
-    </van-swipe>
+    <!--<van-swipe class="goods-swipe" :autoplay="3000">-->
+      <!--<van-swipe-item v-for="thumb in goods.mainImage" :key="thumb">-->
+        <!--<img :src="thumb" >-->
+      <!--</van-swipe-item>-->
+    <!--</van-swipe>-->
+    <img :src="goods.mainImage" style="width: 100%;height: 100%">
     <!--商品基本情况-->
     <van-cell-group>
       <van-cell>
@@ -26,10 +28,10 @@
       <van-goods-action-icon icon="cart-o" @click="onClick" :info="quantity">
         购物车
       </van-goods-action-icon>
-      <van-goods-action-button type="warning" @click="onClickCart">
+      <van-goods-action-button type="warning" @click="onClickBuy">
         加入购物车
       </van-goods-action-button>
-      <van-goods-action-button type="danger" @click="onClickBuy">
+      <van-goods-action-button type="danger" @click="onClickCart">
         立即购买
       </van-goods-action-button>
     </van-goods-action>
@@ -45,6 +47,7 @@
 <script>
   import axios from 'axios';
   import TopBack from '@/components/ToBack.vue';
+  import store from '@/store';
 
   export default {
     name: 'ProductDetail',
@@ -54,7 +57,9 @@
     data(){
       return{
         goods:'',
+        ceshi:'',
         titie:'商品详情',
+        // ceshi:this.$router.query[0].da,
         // imageList: [
         //   'https://img.yzcdn.cn/vant/apple-1.jpg',
         //   'https://img.yzcdn.cn/vant/apple-2.jpg'
@@ -68,9 +73,11 @@
       //获取商品详情
       getPrducts(){
         //获取当前对象
+        // console.log(this.goods)
+        this.ceshi=this.$route.query.da;
         var this_=this;
         var params = new URLSearchParams();
-        params.append('productId',10000)
+        params.append('productId',this.ceshi)
 
         axios.post('/portal/product/detail.do',params)
           .then(function (datas) {
@@ -83,6 +90,7 @@
               });
             }else {
               this_.goods = datas.data.data
+              console.log(this_.goods)
             }
           })
       },
@@ -100,17 +108,67 @@
             }
           })
       },
-      //加入购物车
+      //加入购物车，并跳转
       onClickCart() {
-        // this.$router.push('cart');
+        var this_=this;
+        if (store.state.users === ''){
+          this.$router.push({
+            path:'/login'
+          })
+        }else{
+          var params = new URLSearchParams();
+          params.append('productId',10002)
+          params.append('count',1)
+          axios.post('/portal/cart/add.do',params)
+            .then(function (datas) {
+              if (datas.data.status !== 200) {
+                this_.$dialog.alert({
+                  message:'添加失败'
+                });
+              }else {
+             this_.$router.push({
+               path:'/cart'
+             })
+              }
+            })
+        } ;
       },
       //跳转到购物车
       onClick(){
 
       },
-      //点击立即购买 加入购物车，并切跳转
+      //点击加入购物车
       onClickBuy(){
+        var this_=this;
+          if (store.state.users === ''){
+            this.$router.push({
+              path:'/login'
+            })
+          }else{
+            var params = new URLSearchParams();
+            params.append('productId',this.ceshi)
+            params.append('count',1)
+            axios.post('/portal/cart/add.do',params)
+              .then(function (datas) {
+                if (datas.data.status !== 200) {
+                  console.log(datas.data)
+                  // this_.$dialog.alert({src/views/ProductDetail.vue:158src/views/ProductDetail.vue:156
+                  // });
+                  this_.$dialog.alert({
+                    message:'添加成功'
+                  })
+                }else {
+                    // console.log(datas.datasrc/views/ProductDetail.vue:158.
+                    this_.$dialog.alert({
+                    message:'添加成功'
+                  });
+                  this_.getQuantity();
+                }
 
+
+              })
+
+        } ;
       },
       sorry() {
         this.$toast.success('加入成功');
@@ -156,6 +214,7 @@
   }
   #vfn{
     bottom: 50px;
+    z-index: 10;
   }
 </style>
 

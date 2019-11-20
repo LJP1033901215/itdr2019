@@ -18,6 +18,8 @@ import Cart from './views/Cart'
 import MyCentr from './views/MyCentr'
 //引入分类的组件
 import Classify from './views/Classify'
+//引入空组件
+import Kong from './views/Kong'
 
 
 Vue.use(Router);
@@ -82,6 +84,14 @@ export default new Router({
       name: 'forgetPsw',
       //引入组件，组件咋上面
       component: ForgetPsw,
+    },
+    {
+      //根路径
+      path: '/kong',
+      //名字对应得
+      name: 'kong',
+      //引入组件，组件咋上面
+      component: Kong,
     },
 
     {

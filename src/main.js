@@ -25,6 +25,10 @@ import { Sidebar, SidebarItem } from 'vant';
 
 import 'vant/lib/index.css';
 import Vant from 'vant';
+//引入滑动按钮
+import { SwipeCell } from 'vant';
+
+
 
 
 Vue.use(Vant);
@@ -49,6 +53,8 @@ Vue.use(List);
 //引入侧边导航
 Vue.use(Sidebar);
 Vue.use(SidebarItem);
+//引入滑动按钮
+Vue.use(SwipeCell);
 
 
 // Vue.use(Lazyload, {

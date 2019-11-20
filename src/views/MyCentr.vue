@@ -1,7 +1,7 @@
 <template>
 <!--个人中心页面===========================================================================================================-->
   <div>
-    <div class="ding" v-if="states">
+    <div class="ding" v-if="bl">
       <div class="left" >
         <van-image
         round
@@ -11,7 +11,7 @@
       />
       </div>
       <div class="left" style="margin-top: 10px">
-        {{username1}}
+        {{name}}
       </div>
           <!--图片-->
     </div>
@@ -21,6 +21,7 @@
         width="4rem"
         height="4rem"
         :src="img"
+        id="tb"
       />
       登录/注册
     </div>
@@ -53,7 +54,22 @@
       <van-cell icon="gold-coin-o" title="我的优惠券" is-link />
       <van-cell icon="gift-o" title="我收到的礼物" is-link />
     </van-cell-group>
+
+    <van-button type="primary"
+                size="large"
+                @click="esc"
+                color="#FF6B00"
+                id="an"
+                v-if="bl"
+                >退出账号</van-button>
+    <!--<van-cell is-link @click="showPopup">展示弹出层</van-cell>-->
+    <!--<van-popup-->
+      <!--v-model="show"-->
+      <!--position="right"-->
+      <!--:style="{ width: '80px',height:'100%' }"-->
+    <!--/>-->
   </div>
+
 </template>
 
 <script>
@@ -67,10 +83,31 @@
       return{
         username1:store.state.users,
         states:true,
-        img: require('../assets/logo.png')
+        img:'https://i.loli.net/2019/11/10/qNuR2sjgX6nz7hr.jpg',
+        show:false,
+
       }
     },
     methods:{
+      showPopup(){
+        this.show=true
+      },
+      //退出账号操作
+      esc(){
+        var this_ = this;
+        axios.post('/portal/user/logout.do').
+        then(function (datas) {
+          if (datas.data.status !== 200){
+            this_.$toast('退出失败');
+          }else {
+            store.state.users = '';
+            this_.$toast('已退出账号');
+            this_.$router.push({
+              path:'/myCentr'
+            })
+          }
+        })
+      },
       getUser(){
         console.log("进来了1")
         console.log(store.state.users)
@@ -87,11 +124,30 @@
     },
     activated:function () {
       this.getUser()
+    },
+    computed:{
+      bl(){
+        if (store.state.users!==''){
+          return true
+        }else {
+          return false
+        }
+      },
+      name(){
+        if (store.state.users!==''){
+          return store.state.users.username;
+        }
+      }
     }
   };
 </script>
 
 <style lang="less" scoped>
+  #an{
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+  }
   .ding{
     width: 100%;
     height:8rem;
@@ -107,7 +163,9 @@
     align-items: center;
     color: aliceblue;
   }
-
+#tb{
+  border: 2px white solid !important;
+}
 
   .user {
     &-poster {

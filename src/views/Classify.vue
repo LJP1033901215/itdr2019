@@ -19,9 +19,7 @@
       };
     },
     methods:{
-      onList(){
 
-      },
     }
   };
 </script>

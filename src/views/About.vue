@@ -2,10 +2,10 @@
   <div class="about">
     {{num}}}
     <ul>
-      <li v-for="(user,index) in datauser" :key="index">
-        {{user}}
-      </li>
-    </ul>
+    <li v-for="(user,index) in datauser" :key="index">
+      {{user}}
+    </li>
+  </ul>
   </div>
 </template>
 <script>
